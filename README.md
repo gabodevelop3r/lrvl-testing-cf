@@ -10,3 +10,7 @@ php artisan make:test UserTest
 
 vendor/bin/phpunit --filter UserTest
 
+## instalar libreria para hacer test HTTP
+
+composer require laravel/browser-kit-testing --dev
+
