@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Post;
 
 class InterfaceTest extends TestCase
 {
@@ -81,7 +82,30 @@ class InterfaceTest extends TestCase
                 
     }
     
-    
-    
-    
+    /**
+     *@test
+    */
+    public function adds_post(){
+
+        $this->assertEquals(0, User::count());
+        $user = create('App\Models\User');
+
+        $this->actingAs($user); #crea una sesion (loguea al usuario dentro de la app)
+
+        $data = [
+            'title'=> 'Post title',
+            'content' => 'Lorem ipsum'
+        ];
+        
+
+        $this->visit('post/create')
+                ->type($data['title'],'title')
+                ->type($data['content'],'content')
+                ->press('Enviar')
+                ->assertResponseStatus(200);
+        
+        $this->assertEquals(1, Post::count());
+
+    }
+
 }
